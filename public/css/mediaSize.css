@@ -1,0 +1,45 @@
+@media (min-width:200px)  { /* 1070px*/
+    .navSize{
+        margin: 0;
+    }
+    .navDisplay{
+        display: none;
+        
+    }
+    .dropDisplay {
+        display: block;
+        
+    }
+	.scrollableList ul{
+		width: 100%;
+	}
+}
+@media (min-width: 330px){
+	.scrollableList ul{
+		width: 300px;
+	}
+}
+@media  (min-width:400px)   { /* 1070px*/
+    .navSize{
+        margin: 0;
+    }
+    .navDisplay{
+        display:block;
+        
+    }
+    .dropDisplay {
+        display: none;
+        
+    }
+}
+@media (min-width:600px){
+    .mainContentSize {
+        width: 600px;
+        margin: auto;
+    }
+    .navSize {
+        width:600px; 
+        margin: auto;
+    }
+}
+

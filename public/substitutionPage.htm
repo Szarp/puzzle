@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+		<meta name="mobile-web-app-capable" content="yes">
+		<meta name="theme-color" content="#1e2327">
+        <title>CNC</title>
+        <meta name="description" content="cnc">
+		<meta name="keywords" content="cnc">
+		<meta name="robots" content="index, follow">
+		<meta name="googlebot" content="index, follow">
+		<link rel="shortcut icon" href="/favicon.ico">
+		<link rel="icon" href="/css/favicon.png" type="image/png">
+		<link rel="icon" sizes="1024x1024" href="/img/icon1024.png">
+		<link rel="icon" sizes="192x192" href="/img/icon192.png">
+		<link rel="icon" sizes="144x144" href="/img/icon144.png">
+		<link rel="manifest" href="/manifest.json">
+        <link rel="stylesheet" href="css/webPage.css">
+         <link rel="stylesheet" href="css/mediaSize.css">
+        <link rel="stylesheet" href="css/gCode.css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet">
+        <script type="text/javascript" src="js/sendForm.js"></script>
+    </head>
+    <style>
+     #arrays{
+            
+        }
+        #arrays td{
+            width: 40px; 
+            height:40px;
+            text-align:center; 
+            border-radius: 9px;
+            font-weight: bold;
+            color: #eee;
+            vertical-align:middle;
+            border: 1px solid black;
+            background-color: #111;
+        }
+        #step{
+            background-color: transparent;
+            
+        }
+        #step td{
+            color: #111;
+            border: 0px solid black;
+            font-weight:normal;
+            background-color: transparent;
+        }
+        </style>
+    <script>
+          setTimeout(function(){
+            var ancestor = document.getElementById('board');
+            //console.log(ancestor);
+            var descendents = ancestor.getElementsByTagName('circle');   
+            var elem = descendents;
+              //var hey=0;
+              var p = exampleData1.points;
+            for(var i=0;i<p.length;i++){
+                //console.log("p",p[i]);
+                
+                descendents[i].setAttribute('r',p[i].sq);
+                descendents[i].setAttribute('cx',p[i].x);
+                descendents[i].setAttribute('cy',p[i].y);
+                descendents[i].dataset["label"]=i;
+                descendents[i].addEventListener("click",function(){
+                    cncActions("point",[this.getAttribute('cx'),this.getAttribute('cy'),0])
+                    //console.log('a',,);
+                })
+                
+            }
+            console.log(document.getElementById('board'));
+            //elem
+          },1000);
+var exampleData={
+    board:{
+        params:{
+                x:300,
+                y:160
+            }
+        },
+    points:[
+        {params:{
+            x:10,
+            y:10,
+            size:10
+        },
+        label:"Some info"
+        },
+        {params:{
+            x:20,
+            y:20,
+            size:10
+        },
+        label:"Some info"
+        },
+        {params:{
+            x:30,
+            y:30,
+            size:10
+        },
+        label:"Some info"
+        }
+    ]
+}
+
+
+
+            
+            
+         
+            
+            
+            
+    function prepare(array){
+        console.log('hi');
+    var oneElem;
+    var elems="";
+    var viewBox="";
+    var svg = document.getElementById('board');
+        oneElem = array.board;
+        elems+=board(oneElem.params);
+            viewBox="-10 -10 "+Number(oneElem.params.x+10)+ " "+Number(oneElem.params.y+10);
+            svg.setAttribute("viewBox", viewBox);
+            //svg.setAttribute("width", oneElem.params.x+10 + 'px');
+            //svg.setAttribute("height",oneElem.params.y+10 + "px");
+
+    for(var i=0;i<array.points.length;i++){
+        //oneElem=array.points[i];
+            elems+=defPoint();
+            //makePoint(oneElem);
+        }
+    console.log('elems',elems);
+    svg.innerHTML=elems;
+    /*var descendents = ancestor.getElementsByTagName('circle'); 
+        for(var i=0;i<array.points.length;i++){
+            oneElem=array.points[i];
+                descendents[i].setAttribute('cx',oneElem.params.x);
+                descendents[i].setAttribute('cy',oneElem.params.y);
+                descendents[i].setAttribute('r',oneElem.params.size);
+                descendents[i].addEventListener('click',function(){
+                    console.log(this);
+                });
+                
+                
+            
+            
+        }
+    */
+    
+}
+
+            
+ 
+    
+    
+    
+</script>
+    <body onload="onLoadFunc()">
+
+ 
+
+<ul class="navigation navDisplay navSize" >
+  <li><a id="navbar_home" href="#home">Home</a></li>
+  <li><a id="navbar_substitution" href="#changes">Zastępstwa</a></li>
+  <li><a id="navbar_settings" href="#settings">Ustawienia</a></li>
+  <li style="float:right"> <p id="navbar_photo" href="#about"><img id="personPictureVer" src=""/></p></li>
+</ul>
+<ul class="drop dropDisplay">
+    <li >
+     <a href="javascript:void(0)" >Menu</a>
+     <div class="dropdown-content">
+       <a id="navbar_homeD" href="#home">Home</a>
+       <a id="navbar_substitutionD" href="#changes">Zastępstwa</a>
+       <a id="navbar_settingsD" href="#settings">Ustawienia</a>
+       <p id="navbar_photoD" href="#about"><img id="personPictureHor" src=""/></p>
+     </div>
+    </li>
+</ul>
+	<div id="msgArea"></div>
+	<div class="flex-container nowrap mainContentSize" id="mainContent" >
+        <div class="" id="substitutionList"   >
+            <div  class="item-size  boxed-group" id="elementsContent">
+                    <h3>Zastępstwa</h3>
+                    <div class="boxed-group-inner" style="padding:0px; ">
+                        <div>Wybierz dzień</div>
+                        <div class="chooseDay" style="border-bottom:1px solid black;">
+                            <ul>
+                                <li class="btn" id="todayBtn" >Control</li>
+                                <li class="btn" id="tommorowBtn"  >MoveTo</li>
+                        <!--        <li id="chooseBtn" onclick="">choose</li> --> 
+                            </ul>
+                        </div>
+                         <div id="forDay">
+                            miejsce na nazwę
+                        </div>
+                         
+                        <div class="scrollableList" id='elementsList'>
+                         <div class="boxed-group-section first" id="changesContainer">
+                     
+                            
+                    </div>
+                            
+                            </div>
+    <p>17 czer</p>
+    <p>Lorem ipsum arem paremsLorem ipsum arem paremsLorem ipsum arem paremsLorem ipsum arem paremsLorem ipsum arem paremsLorem ipsum arem paremsLorem ipsum arem paremsLorem ipsum arem paremsLorem ipsum arem paremsLorem ipsum arem paremsLorem ipsum arem paremsLorem ipsum arem paremsLorem ipsum arem paremsLorem ipsum arem parems</p>
+                    </div>
+                </div>
+            
+        </div>
+        <div id="homePage" class="" style="display:none;">
+            <div  class="boxed-group" >
+                    <h3>Home</h3>
+                    <div class="boxed-group-inner" style="text-align: justify;">
+                        <svg id="board" width="800" height="300" viewBox="-100 -20 500 200">
+                            <rect x="0" y="0" width="300" height="160" fill="none" stroke="black"/>
+                        </svg>
+                        
+                    
+
+                    </div>
+                    
+                </div>
+
+        </div>        
+        <div id="about1" class="" style="display:none;">
+            <div  class="boxed-group" >
+                    <h3>O mnie</h3>
+                         <div class="boxed-group-inner" >
+                    <div class="boxed-group-section first" >
+                        <table>
+                          <!--<tr>
+                            <td>                         
+                               Info:
+                            </td>
+                              <td></td>
+                            <td class="btn" id="infoBtn" >Zobacz</td>
+
+                          </tr>-->
+                            
+                            <tr>
+                                <td> Generuj Token: </td>
+                                <td id="tknField"></td>
+                                <td class="btn" id="generateBtn" >Generuj</td>
+                                
+                            </tr>
+                            <tr>
+                                <td> Sprawdź Token: </td>
+                                <td><input type="number" name="token" min="0" max="100000" id="tokenCheck" style="width: 94%" placeholder="Wpisz token"></td>
+                                <td class="btn" id="checkBtn" >Sprawdź</td>
+                                
+                            </tr>
+                        </table>
+                        
+                    </div>
+     
+
+                </div>
+                </div>
+
+        </div>
+        <div id="settingsMenu" class=" pageStyle" style="display:none;">
+            <div class="boxed-group">
+                <h3>Settings</h3>
+                <div class="boxed-group-inner" >
+                    <div class="boxed-group-section first" >
+                        <table>
+                          <tr>
+                            <td>Speed:</td>
+                            <td>  
+                                <textarea id="speed" rows="1" cols="10" autocomplete="off" ></textarea>
+                            </td>
+                          </tr>
+                            <tr>
+                                <td>Notification on Messenger:</td>
+                                <td>                        
+                                    <select  id="setNotification">
+                                        <option value="yes">yes</option>
+                                        <option value="no">no</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </table>
+                        <a id="saveBtn" class="edit-btn btn" onclick="">Save settings</a>
+                    </div>
+     
+
+                </div>
+            </div>
+        </div>
+	</div>
+	<ul class="navigation navSize">
+		<li>
+			<a href="/privacy.html">Prywatność</a>
+		</li>
+		<li>
+			<a href="/tos.html">Warunki</a>
+		</li>
+		<li style="float: right">
+			<a href="https://github.com/szarp/substitutions" rel="noopener" target="_blank" style="padding: 10px; padding-top: 12px"><img alt="GitHub" src="/img/GitHub-Mark-32px.png" type="image/png" width="26px" height="26px"></img></a>
+		</li>
+	</ul>
+    </body>
+</html>
