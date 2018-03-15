@@ -226,13 +226,6 @@
         
         
     }
-    window.addEventListener("mouseup",function(){
-        //console.log("ok");
-        ifClicked=0;
-        imageEvent();
-        patternEvent();
-        
-    })
     function fillTransparent(){
         var time = new Date().getTime();
         var x = this.getAttribute("data-time");
@@ -299,6 +292,20 @@
     }
     
     function on(){
+        document.getElementById("pattern").addEventListener("mouseup",function(){
+        //console.log("ok");
+        ifClicked=0;
+        //imageEvent();
+        patternEvent();
+        
+        })
+        document.getElementById("image").addEventListener("mouseup",function(){
+            //console.log("ok");
+            ifClicked=0;
+            imageEvent();
+            //patternEvent();
+
+        })
         pattern();
         //document.getElementById("navbar_settings").addEventListener("dblclick",function(el){console.log(this)});
         var width=500;
